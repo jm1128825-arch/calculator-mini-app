@@ -3,36 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculator Mini App</title>
+    <title>Calculator</title>
 
     <link rel="stylesheet" href="style.css">
 
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
+
 <body>
 
-<div class="container">
+<div class="calculator">
 
-    <h1>🧮 Calculator</h1>
-
-    <input
-        type="number"
-        id="num1"
-        placeholder="First Number">
-
-    <input
-        type="number"
-        id="num2"
-        placeholder="Second Number">
-
-    <div class="buttons">
-        <button onclick="calculate('+')">+</button>
-        <button onclick="calculate('-')">−</button>
-        <button onclick="calculate('*')">×</button>
-        <button onclick="calculate('/')">÷</button>
+    <div class="display">
+        <div id="previous"></div>
+        <div id="current">0</div>
     </div>
 
-    <h2 id="result">Result: 0</h2>
+    <div class="buttons">
+
+        <button class="function" onclick="clearCalculator()">AC</button>
+        <button class="function" onclick="deleteNumber()">⌫</button>
+        <button class="function" onclick="percentage()">%</button>
+        <button class="operator" onclick="chooseOperator('/')">÷</button>
+
+        <button onclick="appendNumber('7')">7</button>
+        <button onclick="appendNumber('8')">8</button>
+        <button onclick="appendNumber('9')">9</button>
+        <button class="operator" onclick="chooseOperator('*')">×</button>
+
+        <button onclick="appendNumber('4')">4</button>
+        <button onclick="appendNumber('5')">5</button>
+        <button onclick="appendNumber('6')">6</button>
+        <button class="operator" onclick="chooseOperator('-')">−</button>
+
+        <button onclick="appendNumber('1')">1</button>
+        <button onclick="appendNumber('2')">2</button>
+        <button onclick="appendNumber('3')">3</button>
+        <button class="operator" onclick="chooseOperator('+')">+</button>
+
+        <button class="zero" onclick="appendNumber('0')">0</button>
+        <button onclick="appendDecimal()">.</button>
+        <button class="equals" onclick="calculate()">=</button>
+
+    </div>
 
 </div>
 
