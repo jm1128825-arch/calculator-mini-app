@@ -1,83 +1,245 @@
 * {
     box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
 }
 
 body {
     margin: 0;
     min-height: 100vh;
+    font-family: Arial, sans-serif;
+    background: #0e1720;
+}
+
+
+/* =========================
+   BROWSER SCREEN
+========================= */
+
+.browser-screen {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    padding: 30px;
+
+    text-align: center;
+
+    background: #0e1720;
+    color: white;
+}
+
+.telegram-icon {
+    width: 90px;
+    height: 90px;
+
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: Arial, sans-serif;
+
+    margin-bottom: 25px;
+
+    border-radius: 50%;
+
+    background: #229ed9;
+
+    font-size: 45px;
+
+    box-shadow: 0 8px 30px rgba(34, 158, 217, 0.3);
+}
+
+.browser-screen h1 {
+    margin: 0 0 15px;
+
+    font-size: 30px;
+}
+
+.browser-screen p {
+    max-width: 350px;
+
+    margin: 0 0 30px;
+
+    line-height: 1.6;
+
+    color: #aab7c4;
+
+    font-size: 16px;
+}
+
+.telegram-button {
+    display: inline-block;
+
+    padding: 15px 25px;
+
+    border-radius: 12px;
+
+    background: #229ed9;
+
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 17px;
+
+    font-weight: bold;
+
+    box-shadow: 0 5px 20px rgba(34, 158, 217, 0.25);
+}
+
+.telegram-button:active {
+    transform: scale(0.97);
+}
+
+
+/* =========================
+   CALCULATOR
+========================= */
+
+.calculator-screen {
+    display: none;
+
+    min-height: 100vh;
+
+    justify-content: center;
+    align-items: center;
+
     background: #111827;
 }
 
 .calculator {
     width: 100%;
-    max-width: 380px;
-    padding: 15px;
+    max-width: 400px;
+
+    padding: 12px;
 }
 
+
+/* DISPLAY */
+
 .display {
-    min-height: 130px;
-    background: #1f2937;
-    color: white;
-    border-radius: 20px 20px 0 0;
+    min-height: 150px;
+
     padding: 20px;
+
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     align-items: flex-end;
+
+    background: #1f2937;
+
+    border-radius: 20px 20px 0 0;
+
+    color: white;
+
     overflow: hidden;
 }
 
 #previous {
-    font-size: 20px;
-    color: #9ca3af;
     min-height: 28px;
+
+    color: #9ca3af;
+
+    font-size: 20px;
 }
 
 #current {
-    font-size: 48px;
+    font-size: 50px;
+
     font-weight: bold;
+
     word-break: break-all;
 }
 
+
+/* BUTTON AREA */
+
 .buttons {
     display: grid;
+
     grid-template-columns: repeat(4, 1fr);
+
     gap: 8px;
+
     padding: 10px;
+
     background: #111827;
 }
 
+
+/* BUTTONS */
+
 button {
     height: 70px;
+
     border: none;
+
     border-radius: 18px;
-    font-size: 24px;
-    font-weight: bold;
+
     background: #374151;
+
     color: white;
+
+    font-size: 24px;
+
+    font-weight: bold;
+
     cursor: pointer;
+
+    transition: transform 0.08s;
 }
 
 button:active {
-    transform: scale(0.95);
+    transform: scale(0.94);
 }
+
+
+/* FUNCTION */
 
 .function {
     background: #6b7280;
 }
 
+
+/* OPERATORS */
+
 .operator {
     background: #f59e0b;
 }
+
+
+/* EQUAL */
 
 .equals {
     background: #10b981;
 }
 
+
+/* ZERO */
+
 .zero {
     grid-column: span 2;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 400px) {
+
+    .calculator {
+        padding: 8px;
+    }
+
+    button {
+        height: 65px;
+
+        border-radius: 16px;
+
+        font-size: 22px;
+    }
+
+    #current {
+        font-size: 44px;
+    }
 }
