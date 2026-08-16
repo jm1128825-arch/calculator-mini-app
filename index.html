@@ -2,7 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    >
+
     <title>Calculator</title>
 
     <link rel="stylesheet" href="style.css">
@@ -12,44 +16,96 @@
 
 <body>
 
-<div class="calculator">
+    <!-- BROWSER SCREEN -->
+    <div id="browserScreen" class="browser-screen">
 
-    <div class="display">
-        <div id="previous"></div>
-        <div id="current">0</div>
-    </div>
+        <div class="telegram-icon">
+            ✈️
+        </div>
 
-    <div class="buttons">
+        <h1>Open in Telegram</h1>
 
-        <button class="function" onclick="clearCalculator()">AC</button>
-        <button class="function" onclick="deleteNumber()">⌫</button>
-        <button class="function" onclick="percentage()">%</button>
-        <button class="operator" onclick="chooseOperator('/')">÷</button>
+        <p>
+            🧮 Calculator is a Telegram Mini App.
+            Please open it from Telegram to use it.
+        </p>
 
-        <button onclick="appendNumber('7')">7</button>
-        <button onclick="appendNumber('8')">8</button>
-        <button onclick="appendNumber('9')">9</button>
-        <button class="operator" onclick="chooseOperator('*')">×</button>
-
-        <button onclick="appendNumber('4')">4</button>
-        <button onclick="appendNumber('5')">5</button>
-        <button onclick="appendNumber('6')">6</button>
-        <button class="operator" onclick="chooseOperator('-')">−</button>
-
-        <button onclick="appendNumber('1')">1</button>
-        <button onclick="appendNumber('2')">2</button>
-        <button onclick="appendNumber('3')">3</button>
-        <button class="operator" onclick="chooseOperator('+')">+</button>
-
-        <button class="zero" onclick="appendNumber('0')">0</button>
-        <button onclick="appendDecimal()">.</button>
-        <button class="equals" onclick="calculate()">=</button>
+        <a
+            id="telegramButton"
+            class="telegram-button"
+            href="#"
+        >
+            ✈️ Open in Telegram
+        </a>
 
     </div>
 
-</div>
 
-<script src="script.js"></script>
+    <!-- CALCULATOR -->
+    <div id="calculatorScreen" class="calculator-screen">
+
+        <div class="calculator">
+
+            <div class="display">
+
+                <div id="previous"></div>
+
+                <div id="current">0</div>
+
+            </div>
+
+            <div class="buttons">
+
+                <button class="function" onclick="clearCalculator()">AC</button>
+
+                <button class="function" onclick="deleteNumber()">⌫</button>
+
+                <button class="function" onclick="percentage()">%</button>
+
+                <button class="operator" onclick="chooseOperator('/')">÷</button>
+
+
+                <button onclick="appendNumber('7')">7</button>
+
+                <button onclick="appendNumber('8')">8</button>
+
+                <button onclick="appendNumber('9')">9</button>
+
+                <button class="operator" onclick="chooseOperator('*')">×</button>
+
+
+                <button onclick="appendNumber('4')">4</button>
+
+                <button onclick="appendNumber('5')">5</button>
+
+                <button onclick="appendNumber('6')">6</button>
+
+                <button class="operator" onclick="chooseOperator('-')">−</button>
+
+
+                <button onclick="appendNumber('1')">1</button>
+
+                <button onclick="appendNumber('2')">2</button>
+
+                <button onclick="appendNumber('3')">3</button>
+
+                <button class="operator" onclick="chooseOperator('+')">+</button>
+
+
+                <button class="zero" onclick="appendNumber('0')">0</button>
+
+                <button onclick="appendDecimal()">.</button>
+
+                <button class="equals" onclick="calculate()">=</button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script src="script.js"></script>
 
 </body>
 </html>
