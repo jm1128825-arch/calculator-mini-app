@@ -1,94 +1,68 @@
-* {
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
-}
-
-body {
-    margin: 0;
-    min-height: 100vh;
-    font-family: Arial, sans-serif;
-    background: #0e1720;
-}
+const tg = window.Telegram?.WebApp;
 
 
 /* =========================
-   BROWSER SCREEN
+   TELEGRAM DETECTION
 ========================= */
 
-.browser-screen {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+const browserScreen =
+    document.getElementById("browserScreen");
 
-    padding: 30px;
+const calculatorScreen =
+    document.getElementById("calculatorScreen");
 
-    text-align: center;
+const telegramButton =
+    document.getElementById("telegramButton");
 
-    background: #0e1720;
-    color: white;
-}
 
-.telegram-icon {
-    width: 90px;
-    height: 90px;
+/*
+   Telegram gives the Mini App
+   information through initData.
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+   If initData exists, we consider
+   the app opened from Telegram.
+*/
 
-    margin-bottom: 25px;
+const isTelegram =
+    tg &&
+    tg.initData &&
+    tg.initData.length > 0;
 
-    border-radius: 50%;
 
-    background: #229ed9;
+if (isTelegram) {
 
-    font-size: 45px;
+    // Tell Telegram the app is ready
+    tg.ready();
 
-    box-shadow: 0 8px 30px rgba(34, 158, 217, 0.3);
-}
+    // Expand the Mini App
+    if (tg.expand) {
+        tg.expand();
+    }
 
-.browser-screen h1 {
-    margin: 0 0 15px;
+    // Hide browser screen
+    browserScreen.style.display = "none";
 
-    font-size: 30px;
-}
+    // Show calculator
+    calculatorScreen.style.display = "flex";
 
-.browser-screen p {
-    max-width: 350px;
+} else {
 
-    margin: 0 0 30px;
+    // Hide calculator
+    calculatorScreen.style.display = "none";
 
-    line-height: 1.6;
+    // Show Telegram screen
+    browserScreen.style.display = "flex";
 
-    color: #aab7c4;
+    /*
+       IMPORTANT:
+       Replace YOUR_BOT_USERNAME below
+       with your actual Telegram bot username.
+    */
 
-    font-size: 16px;
-}
+    const botUsername = "YOUR_BOT_USERNAME";
 
-.telegram-button {
-    display: inline-block;
-
-    padding: 15px 25px;
-
-    border-radius: 12px;
-
-    background: #229ed9;
-
-    color: white;
-
-    text-decoration: none;
-
-    font-size: 17px;
-
-    font-weight: bold;
-
-    box-shadow: 0 5px 20px rgba(34, 158, 217, 0.25);
-}
-
-.telegram-button:active {
-    transform: scale(0.97);
+    telegramButton.href =
+        "https://t.me/" + botUsername;
 }
 
 
@@ -96,150 +70,235 @@ body {
    CALCULATOR
 ========================= */
 
-.calculator-screen {
-    display: none;
+let current = "0";
 
-    min-height: 100vh;
+let previous = "";
 
-    justify-content: center;
-    align-items: center;
+let operator = null;
 
-    background: #111827;
-}
-
-.calculator {
-    width: 100%;
-    max-width: 400px;
-
-    padding: 12px;
-}
+let shouldReset = false;
 
 
-/* DISPLAY */
+const currentDisplay =
+    document.getElementById("current");
 
-.display {
-    min-height: 150px;
+const previousDisplay =
+    document.getElementById("previous");
 
-    padding: 20px;
 
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: flex-end;
+function updateDisplay() {
 
-    background: #1f2937;
+    currentDisplay.textContent = current;
 
-    border-radius: 20px 20px 0 0;
-
-    color: white;
-
-    overflow: hidden;
-}
-
-#previous {
-    min-height: 28px;
-
-    color: #9ca3af;
-
-    font-size: 20px;
-}
-
-#current {
-    font-size: 50px;
-
-    font-weight: bold;
-
-    word-break: break-all;
+    previousDisplay.textContent =
+        operator && previous !== ""
+            ? `${previous} ${displayOperator(operator)}`
+            : "";
 }
 
 
-/* BUTTON AREA */
+function displayOperator(op) {
 
-.buttons {
-    display: grid;
+    if (op === "*") return "×";
 
-    grid-template-columns: repeat(4, 1fr);
+    if (op === "/") return "÷";
 
-    gap: 8px;
+    if (op === "-") return "−";
 
-    padding: 10px;
-
-    background: #111827;
+    return op;
 }
 
 
-/* BUTTONS */
+function appendNumber(number) {
 
-button {
-    height: 70px;
+    if (
+        current === "0" ||
+        shouldReset ||
+        current === "Error"
+    ) {
 
-    border: none;
+        current = number;
 
-    border-radius: 18px;
+        shouldReset = false;
 
-    background: #374151;
+    } else {
 
-    color: white;
-
-    font-size: 24px;
-
-    font-weight: bold;
-
-    cursor: pointer;
-
-    transition: transform 0.08s;
-}
-
-button:active {
-    transform: scale(0.94);
-}
-
-
-/* FUNCTION */
-
-.function {
-    background: #6b7280;
-}
-
-
-/* OPERATORS */
-
-.operator {
-    background: #f59e0b;
-}
-
-
-/* EQUAL */
-
-.equals {
-    background: #10b981;
-}
-
-
-/* ZERO */
-
-.zero {
-    grid-column: span 2;
-}
-
-
-/* MOBILE */
-
-@media (max-width: 400px) {
-
-    .calculator {
-        padding: 8px;
+        current += number;
     }
 
-    button {
-        height: 65px;
+    updateDisplay();
+}
 
-        border-radius: 16px;
 
-        font-size: 22px;
+function appendDecimal() {
+
+    if (shouldReset) {
+
+        current = "0.";
+
+        shouldReset = false;
+
+        updateDisplay();
+
+        return;
     }
 
-    #current {
-        font-size: 44px;
+
+    if (!current.includes(".")) {
+
+        current += ".";
     }
+
+    updateDisplay();
+}
+
+
+function chooseOperator(op) {
+
+    if (current === "Error") {
+
+        clearCalculator();
+
+        return;
+    }
+
+
+    if (operator && !shouldReset) {
+
+        calculate();
+    }
+
+
+    previous = current;
+
+    operator = op;
+
+    shouldReset = true;
+
+    updateDisplay();
+}
+
+
+function calculate() {
+
+    if (!operator || previous === "") {
+
+        return;
+    }
+
+
+    const a = parseFloat(previous);
+
+    const b = parseFloat(current);
+
+
+    let result;
+
+
+    if (operator === "+") {
+
+        result = a + b;
+    }
+
+
+    if (operator === "-") {
+
+        result = a - b;
+    }
+
+
+    if (operator === "*") {
+
+        result = a * b;
+    }
+
+
+    if (operator === "/") {
+
+        if (b === 0) {
+
+            current = "Error";
+
+            previous = "";
+
+            operator = null;
+
+            shouldReset = true;
+
+            updateDisplay();
+
+            return;
+        }
+
+        result = a / b;
+    }
+
+
+    current =
+        String(Number(result.toFixed(10)));
+
+
+    previous = "";
+
+    operator = null;
+
+    shouldReset = true;
+
+
+    updateDisplay();
+}
+
+
+function clearCalculator() {
+
+    current = "0";
+
+    previous = "";
+
+    operator = null;
+
+    shouldReset = false;
+
+    updateDisplay();
+}
+
+
+function deleteNumber() {
+
+    if (
+        shouldReset ||
+        current === "Error"
+    ) {
+
+        clearCalculator();
+
+        return;
+    }
+
+
+    current =
+        current.length > 1
+            ? current.slice(0, -1)
+            : "0";
+
+
+    updateDisplay();
+}
+
+
+function percentage() {
+
+    if (current === "Error") {
+
+        clearCalculator();
+
+        return;
+    }
+
+
+    current =
+        String(parseFloat(current) / 100);
+
+
+    updateDisplay();
 }
